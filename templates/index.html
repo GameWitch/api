@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>land peasants welcome</h1>
+        <p>
+            This is the landing page for an api I done gone and did.
+            So about two ago I saw an article about the Chicago DSA connected website found
+            <a href="https://findmylandlord.chicagodsa.org/">Here</a>
+            that talked about how landlords use multiple holding companies to obfuscate their property holdings.
+            They went on to describe a methodology of matching that tax address to all others in a database to reveal
+            these networks of holdings. I had recently learned Python and was curious if I would be able to do the same
+            thing in Denver.
+        </p>
+        <p>
+            Well I could and did, using Flask. I built a pretty simple single page site using the data available from the
+            <a href="http://data.denvergov.org/">City of Denver Open Data Catalog</a> which is licensed under
+            <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>,
+            and here are their <a href=https://www.denvergov.org/opendata/termsofuse"">Terms of Use</a> that I believe
+                I'm now in complance with. I then geocoded all the locations,
+            added the lat and long to the csv file and used open maps to plot the buildings locations. I hosted it and moved on.
+            But since then I've learned alot. Also, there have been huge developments in the real estate market and the
+            old data just isn't correct in a lot of instances. So I've redone the project here as an API so that I can continue
+            it on a few fronts. I'm using a sql database now, which is definitely faster and has simplified my code dramatically.
+            I also have a script I can run locally once a month when the City of Denver Data Catalog updates their open data
+            so that I can stay up to date with changes to who owns what.
+        </p>
+        <p>
+            I'm releasing this API so that anyone else who wants to grab and use this data from me can do so.
+            Also, I'm building another simple site demonstrating a basic usage.
+            What I'm really excited about though is learning microsoft's .net maui.
+            It's their framework for building cross-platform apps and I figured this would be a cool
+            and fun learning project towards that end.
+        </p>
+            <h2>Usage</h2>
+    <p> These are all the current routes you can request, I will be updating as I add more.</p>
+                <h3>'/all'</h3>
+                    <p> This accepts no parameters it simply returns a json with all the data I have. It's 28,817 entries.
+                        I haven't done anything to verify the data's accuracy. It's just what was in the Denver open data's excel sheets.
+                        The only way I've altered it is by not including some of the cells that didn't have anything interesting in them,
+                        and adding latitude and longitude that I wrote a script to grab from Google Maps' API.
+                        There are around 300 addresses that Google Maps couldn't geocode. They are also included.
+                    </p>
+                <h3>"/search_all_owned"</h3>
+                    <p>
+                        This accepts a parameter as in url.whatever/search_all_owned?address=1234 N FAKE ST
+                        It returns a json of all the properties in the database that share the same owner's address.
+                        I don't do any work to ensure that the entered information is formatted correctly so do that on your end.
+                        but you can do an '/all' route to check out the format of the data. The addresses are all in the format
+                        NUMBER STREET DIRECTION(N S E or W) STREET NAME STREET TYPE(ST, BLVD, AVE etc)
+                    </p>
+                <h3>"/search_neighborhood"</h3>
+                    <p>
+                        This accepts a parameter as in url.whatever/search_neighborhood?neighborhood=FIVE POINTS
+                        It returns a json of all properties in the database located in the neighborhood.
+                        Here's a list of all the neighborhoods as they appear in the database.
+                    </p>
+    <p>
+ACADEMY
+ARAPAHOE SQUARE
+ATHMAR PARK
+AURARIA
+AVONDALE
+BAKER
+BALLPARK
+BARNUM
+BEAR VALLEY
+BELCARO
+BELMONT HTS
+BERKELEY
+BISCAYNE
+BONNIE BRAE
+BREAKERS
+C GREEN VALLEY
+CAPITOL HILL
+CAPITOL HILL S
+CBD
+CENTRAL PARK
+CHAFFEE PARK
+CHEESMAN PARK
+CHERMONT
+CHERRY CREEK
+CHERRY POINT
+CIVIC CENTER
+CLAYTON
+COLE
+COLLEGE VIEW
+COMMONS
+CONGRESS PARK
+CORNERSTONE
+CORY MERRILL
+COUNTRY CLUB
+CREEKVW/SUNSET
+CRESTMOOR
+CRESTMOOR E
+CRESTRIDGE
+CURTIS PARK
+DARTMOUTH HTS
+DENVER TECH
+DIA
+E COLFAX (N)
+E COLFAX (S)
+E HARVEY PARK
+E HIGHLAND
+E SLOANS LAKE
+EAST BAY
+FIVE POINTS
+FORT LOGAN
+GATEWAY N
+GLENBROOK
+GLOBEVILLE
+GODSMAN
+GOLDSMITH
+GOLDSMITH  W
+GRANT RN/MARST
+GREEN VALLEY
+GUN CLUB
+HALE/MAYFAIR
+HAMPDEN HTS E
+HAMPDEN HTS W
+HARVEY PARK
+HIGHLAND
+HILLTOP
+HILLTOP DOWNS
+HOLLY HILLS
+HOLLY RIDGE
+HUTCH/WILLOW P
+HUTCHINSON HLS
+INDIAN CREEK
+INSPIRATION PT
+JEFFERSON PARK
+KENNEDY
+LINCOLN PARK
+LODO
+LOWRY
+LYNWOOD
+MAR LEE
+MONACO PKWY
+MONTBELLO
+MONTCLAIR
+MT PARK
+N CAPITOL HILL
+N CONGRESS PK
+N COUNTRY CLUB
+N GREEN VALLEY
+N PARK HILL
+N POLO CLUB
+N SLOANS LAKE
+N SPEER
+N UNIVERSITY
+NE PARK HILL
+NORTHFIELD
+OVERLAND
+OVERLOOK
+PARK FOREST
+PARK HILL (N)
+PARK HILL (S)
+PARK VISTA
+PARKFIELD
+PARKWAY
+PARKWEST
+PINE RIDGE
+PINE VALLEY
+PINECREST
+PINEHURST
+PINEHURST ES S
+PINEHURST ESTA
+PLATTE PARK
+POLO CLUB
+POLO FIELD
+RANGE VIEW
+REGIS
+RIVER NORTH
+ROSEDALE
+RUBY HILL
+S CHERRY CREEK
+S CITY PARK
+S COUNTRY CLUB
+S HALE
+S HARVEY PARK
+S SPEER
+S WASHINGTON PK
+S. HILLTOP
+SEVEN SPRINGS
+SKYLAND
+SLOANS LAKE
+SMITH RD (S-I70)
+SOUTH PLATTE
+SOUTHMOOR #1
+SOUTHMOOR PARK
+STOKES
+SUMMERFIELD
+SUN VALLEY
+SUNNYSIDE
+SWANSEA
+SWANSEA (N)
+SWANSEA (S)
+TAMARAC HILLS
+UNIVERSITY
+UNIVERSITY HLS
+UNIVERSITY PK
+UNIVERSITY S
+VALVERDE
+VILLA PARK
+VILLAS CHRY HL
+VIRGINIA VALE
+VIRGINIA VILL
+W BAKER
+W CITY PARK
+W COLFAX
+W HIGHLAND
+W HIGHLAND / HGV
+W WASHINGTON PARK
+W WASHINGTON PK
+WASHINGTON
+WASHINGTON PK
+WELLSHIRE EAST
+WESTBRIDGE
+WESTWOOD
+WHITTIER
+WILLOW POINT E
+WINDSOR
+WLSHR/S HILLS
+WOODSTREAM
+ZUNI PARK
+                    </p>
+</body>
+</html>
