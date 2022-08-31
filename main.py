@@ -3,9 +3,11 @@ from flask_sqlalchemy import SQLAlchemy
 from os import environ, getenv
 
 app = Flask(__name__)
+# what follows is because heroku uses an outdated naming convention for postgresql
 uri = getenv("DATABASE_URL")  # or other relevant config var
 if uri.startswith("postgres://"):
     uri = uri.replace("postgres://", "postgresql://", 1)
+
 app.config['SQLALCHEMY_DATABASE_URI'] = environ.get(uri, 'sqlite:///Data/addresses.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
