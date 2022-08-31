@@ -3,7 +3,6 @@ from flask_sqlalchemy import SQLAlchemy
 from os import environ
 
 app = Flask(__name__)
-
 app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('DATABASE_URL', 'sqlite:///Data/addresses.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
@@ -83,4 +82,4 @@ def get_all_neighborhood_properties():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
